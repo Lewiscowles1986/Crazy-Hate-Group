@@ -1,4 +1,7 @@
 walk(document.body);
+document.body.addEventListener('DOMSubtreeModified', function () {
+    walk(document.body);
+});
 
 function walk(node)
 {
