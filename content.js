@@ -1,7 +1,13 @@
 walk(document.body);
-document.body.addEventListener('DOMSubtreeModified', function () {
-    walk(document.body);
-});
+
+(function (element) {
+    element.observer = new MutationObserver(function() { // Really expensive to do this!
+        walk(element);
+    });
+    var config = { attributes: false, childList: true, characterData: true, subtree: true};
+    element.observer.observe(element, config); //starts the actual observing of the element.
+
+})(document.body);
 
 function walk(node)
 {
