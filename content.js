@@ -1,4 +1,7 @@
 walk(document.body);
+document.body.addEventListener('DOMSubtreeModified', function () {
+   walk(document.body);
+});
 
 function walk(node)
 {
@@ -7,9 +10,9 @@ function walk(node)
 
 	switch ( node.nodeType )
 	{
-		case 1:  // Element
-		case 9:  // Document
-		case 11: // Document fragment
+		case Node.ELEMENT_NODE:
+		case Node.DOCUMENT_NODE:
+		case Node.DOCUMENT_FRAGMENT_NODE:
 			child = node.firstChild;
 			while ( child )
 			{
@@ -19,7 +22,7 @@ function walk(node)
 			}
 			break;
 
-		case 3: // Text node
+		case Node.TEXT_NODE:
 			handleText(node);
 			break;
 	}
@@ -32,9 +35,8 @@ function handleText(textNode)
 	v = v.replace(/\bIslamic State\b/g, "Crazy Hate Group");
 	v = v.replace(/\bislamic state\b/g, "crazy hate group");
 	v = v.replace(/\bISIS\b/g, "CRAZY HATE GROUP");
-	v = v.replace(/\breligious\b/g, "non religious");
-	v = v.replace(/\bIslam\b/g, "non islamic");
-	v = v.replace(/\bislam\b/g, "non islamic");
+
+	
 
 	textNode.nodeValue = v;
 }
